@@ -73,34 +73,3 @@ def generate_video(latitudes, longitudes):
     # Generar fotogramas para el video
     for i in range(len(latitudes)):
         canvas.fill(255)  # Rellenar el lienzo con fondo blanco
-        x = int((longitudes[i] - min(longitudes)) / (max(longitudes) - min(longitudes)) * width)
-        y = int((latitudes[i] - min(latitudes)) / (max(latitudes) - min(latitudes)) * height)
-        
-        canvas[y:y+arrow_img.shape, x:x+arrow_img.shape] = arrow_img
-        
-        video_writer.write(canvas)
-    
-    video_writer.release()
-    st.video('route_video.mp4')
-
-# Diseño de la aplicación Streamlit
-st.title("Visualización y Animación de Rutas GPX")
-
-# Cargador de archivos para el archivo GPX
-gpx_file = st.file_uploader("Subir archivo GPX", type=["gpx"])
-
-if gpx_file:
-    latitudes, longitudes = parse_gpx(gpx_file)
-    
-    # Opción para ver la ruta en un mapa
-    if st.button("Ver Ruta"):
-        map_type = st.selectbox("Seleccionar Tipo de Mapa", ["roadmap", "satellite"])
-        plot_route(latitudes, longitudes, map_type)
-    
-    # Opción para crear una animación de una flecha siguiendo la ruta
-    if st.button("Crear Animación"):
-        create_animation(latitudes, longitudes)
-    
-    # Opción para generar un video de una flecha siguiendo la ruta
-    if st.button("Generar Video"):
-        generate_video(latitudes, longitudes)
