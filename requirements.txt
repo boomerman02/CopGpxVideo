@@ -3,4 +3,4 @@ matplotlib
 numpy
 Pillow
 opencv-python
-xml
+gpxpy
